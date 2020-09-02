@@ -5,8 +5,13 @@ class SoapClient extends \SoapClient {
 
 	function __doRequest($request, $location, $action, $version, $one_way = 0) {
 		$request = $this->appendXsiTypeForExtendedDatastructures($request);
+		print htmlentities($request);
+		print '<br /><br />';
 		$result = parent::__doRequest($request, $location, $action, $version, $one_way);
-		if (isset($this->__soap_fault) && $this->__soap_fault) {
+        print htmlentities($result);
+        print '<br /><br />';
+
+        if (isset($this->__soap_fault) && $this->__soap_fault) {
 			throw $this->__soap_fault;
 		}
 		return $result;

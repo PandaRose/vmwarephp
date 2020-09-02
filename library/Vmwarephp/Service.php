@@ -71,6 +71,7 @@ class Service {
 			$result = $this->soapClient->$method($soapMessage);
 		} catch (\SoapFault $soapFault) {
 			$this->soapClient->_classmap = null;
+			die();
 			throw new \Vmwarephp\Exception\Soap($soapFault);
 		}
 		$this->soapClient->_classmap = null;

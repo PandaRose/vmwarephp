@@ -28,8 +28,8 @@ class SessionManager extends \Vmwarephp\ManagedObject {
 
 	private function acquireANewSession($userName, $password) {
 		$session = $this->Login(array('userName' => $userName, 'password' => $password, 'locale' => null));
-		$cloneTicket = $this->AcquireCloneTicket();
-		$this->saveCloneTicket($cloneTicket);
+		//$cloneTicket = $this->AcquireCloneTicket();
+		//$this->saveCloneTicket($cloneTicket);
 		return $session;
 	}
 

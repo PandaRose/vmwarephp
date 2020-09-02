@@ -12,13 +12,22 @@ class SoapClient {
 	}
 
 	function make(\Vmwarephp\Vhost $vhost, $useExceptions = 1, $trace = 1) {
+        $context = stream_context_create([
+            'ssl' => [
+                // set some SSL/TLS specific options
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ]);
 		$options = array(
 			'trace' => $trace,
 			'location' => $this->makeRequestsLocation($vhost),
 			'exceptions' => $useExceptions,
 			'connection_timeout' => 10,
 			'classmap' => $this->wsdlClassMapper->getClassMap(),
-			'features' => SOAP_SINGLE_ELEMENT_ARRAYS + SOAP_USE_XSI_ARRAY_TYPE
+			'features' => SOAP_SINGLE_ELEMENT_ARRAYS + SOAP_USE_XSI_ARRAY_TYPE,
+            'stream_context' => $context
 		);
 		$soapClient = $this->makeDefaultSoapClient($this->wsdlFilePath, $options);
 		if (!$soapClient) throw new Ex\CannotCreateSoapClient();
